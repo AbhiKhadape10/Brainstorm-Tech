@@ -10,11 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # Use Node.js 16
+
     - name: Checkout code
-      uses: actions/checkout@v2.5.0  # Use a version compatible with Node.js 16
+      uses: actions/checkout@v2
 
     - name: Deploy to VPS
-      uses: appleboy/ssh-action@v0.1.10  # Use a version that is available and compatible
+      uses: appleboy/ssh-action@v0.7.0  # Use a version that is available and compatible
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
