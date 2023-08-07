@@ -11,15 +11,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2.5.0
+      uses: actions/checkout@v2.5.0  # Use a version compatible with Node.js 16
 
     - name: Deploy to VPS
-      uses: appleboy/ssh-action@v0.1.10
+      uses: appleboy/ssh-action@v0.6.0  # Use a version compatible with your deployment scenario
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd cd /var/www/wordpress
+          cd /var/www/wordpress
           git pull origin main
