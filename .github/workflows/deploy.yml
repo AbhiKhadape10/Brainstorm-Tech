@@ -1,5 +1,4 @@
-name: Deploy WordPress
-
+name: Deploy WordPress to EC2 with Nginx
 on:
   push:
     branches:
@@ -8,13 +7,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Deploy to VPS
-      run: |
-        cat deploy.sh | ssh -i <(echo "${SSH_PRIVATE_KEY}") -o StrictHostKeyChecking=no abhishek@16.171.12.215
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $EC2_INSTANCE_IP >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          scp -r -o StrictHostKeyChecking=no ./wordpress/* ec2-user@$EC2_INSTANCE_IP:/var/www/wordpress
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_IP "sudo systemctl stop nginx"
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_IP "sudo cp -r /var/www/wordpress/* /var/www/html"
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_IP "sudo systemctl start nginx"
+
+env:
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  EC2_INSTANCE_IP: your_ec2_instance_ip
