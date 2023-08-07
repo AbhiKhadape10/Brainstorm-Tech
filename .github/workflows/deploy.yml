@@ -17,10 +17,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_INSTANCE_IP >> ~/.ssh/known_hosts
-          #letsgo
+          #letsgo 
       - name: Deploy to EC2
         run: |
-          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./wordpress/* ubuntu@$EC2_INSTANCE_IP:/var/www/wordpress
+          sudo scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./wordpress/* ubuntu@$EC2_INSTANCE_IP:/var/www/wordpress
           ssh -o StrictHostKeyChecking=no ubuntu@$EC2_INSTANCE_IP "sudo systemctl stop nginx"
           ssh -o StrictHostKeyChecking=no ubuntu@$EC2_INSTANCE_IP "sudo cp -r /var/www/wordpress/* /var/www/html"
           ssh -o StrictHostKeyChecking=no ubuntu@$EC2_INSTANCE_IP "sudo systemctl start nginx"
