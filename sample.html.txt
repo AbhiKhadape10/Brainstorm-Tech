@@ -6,7 +6,6 @@
 <body>
     <h1>Hello, GitHub Actions!</h1>
     <h1>Hello, Rockstar!</h1>
-    <h1>Hello, Rockstar!</h1>
     <p>This is a sample static website.</p>
 </body>
 </html>
