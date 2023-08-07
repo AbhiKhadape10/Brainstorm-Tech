@@ -12,11 +12,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    
 
     - name: Deploy to VPS
       run: |
-        ssh abhishek@16.171.12.215 'bash -s' < deploy.sh
+        cat deploy.sh | ssh -i <(echo "${SSH_PRIVATE_KEY}") -o StrictHostKeyChecking=no abhishek@16.171.12.215
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    
