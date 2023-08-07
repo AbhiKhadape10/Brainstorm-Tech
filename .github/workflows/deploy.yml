@@ -17,7 +17,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_INSTANCE_IP >> ~/.ssh/known_hosts
-
+          #letsgo
       - name: Deploy to EC2
         run: |
           scp -r -o StrictHostKeyChecking=no ./wordpress/* ec2-user@$EC2_INSTANCE_IP:/var/www/wordpress
