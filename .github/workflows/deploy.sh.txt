@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /var/www/wordpress
+git pull origin main
