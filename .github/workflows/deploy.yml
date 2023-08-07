@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy WordPress
 
 on:
   push:
@@ -10,21 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'  # Use Node.js 16
-
     - name: Checkout code
-      uses: actions/checkout@main
+      uses: actions/checkout@v2
 
     - name: Deploy to VPS
-      uses: appleboy/ssh-action@v1.0.0  # Use a version that is available and compatible
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /var/www/wordpress
-          git pull origin main
+      run: |
+        ssh abhishek@16.171.12.215 'bash -s' < deploy.sh
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    ```
+
