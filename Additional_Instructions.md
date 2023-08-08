@@ -10,23 +10,6 @@ The WordPress website is deployed using a LEMP stack (Linux, Nginx, MySQL, PHP) 
 - **PHP-FPM**: Handles PHP processing for dynamic content.
 - **GitHub Actions**: Automates the deployment process from code changes to updating the website on the VPS.
 
-## Folder Structure
-The project follows a standard folder structure to keep the code organized and maintainable:
-├── .github/workflows            # GitHub Actions workflow configurations
-├── images                       # Images used in documentation
-├── wordpress                    # WordPress installation and code
-│   ├── wp-admin
-│   ├── wp-content
-│   ├── wp-includes
-│   ├── index.php
-│   ├── ...
-│   └── (other WordPress files)
-├── nginx                        # Nginx server configurations
-│   ├── default.conf             # Main server block configuration
-│   └── (other Nginx configurations)
-└── ...
-
-
 ## Environment Variables
 In the GitHub Actions workflow, we use the following environment variables defined in the repository Secrets:
 
